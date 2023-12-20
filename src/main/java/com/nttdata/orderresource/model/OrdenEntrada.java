@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -18,14 +21,14 @@ public class OrdenEntrada {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrdenEntrada;
 
+    @Column(name = "fechaentrada", nullable = false)
+    private LocalDate fechaentrada;
+
     @ManyToOne
     @JoinColumn(name = "idProveedor", nullable = false, foreignKey = @ForeignKey(name = "fkOrdenEntradaProveedor"))
     private Proveedor proveedor;
 
-    @Column(name = "fechaentrada", nullable = false)
-    private LocalDate fechaentrada;
-
-    @Transient
-    List<Articulo> listaArticulos;
+    @OneToMany(mappedBy = "ordenEntrada", cascade = CascadeType.ALL)
+    private List<OrdenEntradaDetalle> detalle;
 
 }

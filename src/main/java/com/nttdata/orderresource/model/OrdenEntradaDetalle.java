@@ -11,14 +11,12 @@ public class OrdenEntradaDetalle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDetalleEntrada;
+    private Integer idDetalleEntrada;
 
     @ManyToOne
-    @JoinColumn(name = "idOrdenEntrada", nullable = false, foreignKey = @ForeignKey(name = "fkOrdenEntradaDetalle"))
     private OrdenEntrada ordenEntrada;
 
     @ManyToOne
-    @JoinColumn(name = "id_articulo", nullable = false, foreignKey = @ForeignKey(name = "fkDetalleArticulo"))
     private Articulo articulo;
 
     @Column(name = "cantidad", nullable = false)
