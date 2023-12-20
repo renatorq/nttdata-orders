@@ -1,5 +1,6 @@
 package com.nttdata.orderresource.kafka;
 
+import com.nttdata.orderresource.dto.DetalleOrdenEntradaDTO;
 import com.nttdata.orderresource.model.Articulo;
 import com.nttdata.orderresource.model.OrdenEntradaDetalle;
 import org.slf4j.Logger;
@@ -14,22 +15,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class KafkaProducer {
+
+
     @Value("${spring.kafka.topic.name}")
     private String topicJsonName;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
-    private final KafkaTemplate<String, OrdenEntradaDetalle> kafkaTemplate;
+    private KafkaTemplate<String, DetalleOrdenEntradaDTO> kafkaTemplate;
 
-    public KafkaProducer(KafkaTemplate<String, OrdenEntradaDetalle> kafkaTemplate) {
+    public KafkaProducer(KafkaTemplate<String, DetalleOrdenEntradaDTO> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendMessage(OrdenEntradaDetalle data) {
+    public void sendMessage(DetalleOrdenEntradaDTO data){
 
         LOGGER.info(String.format("Message sent -> %s", data.toString()));
 
-        Message<OrdenEntradaDetalle> message = MessageBuilder
+        Message<DetalleOrdenEntradaDTO> message = MessageBuilder
                 .withPayload(data)
                 .setHeader(KafkaHeaders.TOPIC, topicJsonName)
                 .build();

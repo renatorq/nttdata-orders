@@ -17,13 +17,16 @@ public class Articulo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idArticulo;
 
-    @Column(name = "descripcion", nullable = false, length = 100)
+    @Column
+    private String nombre;
+
+    @Column
     private String descripcion;
 
-    @Column(name = "stock", nullable = false)
+    @Column
     private Integer stock;
 
-    @Column(name = "precio", nullable = false)
+    @Column
     private BigDecimal precio;
 
 }

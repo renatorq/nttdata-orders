@@ -1,5 +1,7 @@
 package com.nttdata.orderresource.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,9 +16,13 @@ public class OrdenEntradaDetalle {
     private Integer idDetalleEntrada;
 
     @ManyToOne
+    @JoinColumn(name = "idOrdenEntrada")
+    @JsonIgnoreProperties
     private OrdenEntrada ordenEntrada;
 
     @ManyToOne
+    @JoinColumn(name = "idArticulo")
+    @JsonIgnoreProperties
     private Articulo articulo;
 
     @Column(name = "cantidad", nullable = false)
@@ -24,5 +30,6 @@ public class OrdenEntradaDetalle {
 
     @Column(name = "precioUnitario", nullable = false)
     private BigDecimal precioUnitario;
+
 
 }

@@ -25,10 +25,20 @@ public class OrdenEntrada {
     private LocalDate fechaentrada;
 
     @ManyToOne
-    @JoinColumn(name = "idProveedor", nullable = false, foreignKey = @ForeignKey(name = "fkOrdenEntradaProveedor"))
+    @JoinColumn(name = "idProveedor")
     private Proveedor proveedor;
 
-    @OneToMany(mappedBy = "ordenEntrada", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ordenEntrada", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<OrdenEntradaDetalle> detalle;
+
+    @Override
+    public String toString() {
+        return "OrdenEntrada{" +
+                "idOrdenEntrada=" + idOrdenEntrada +
+                ", fechaEntrada=" + fechaentrada +
+                ", proveedor=" + (proveedor != null ? proveedor.getIdProveedor() : "null") +
+                /* otros campos, pero evita imprimir detalles para evitar la referencia cíclica */ +
+                '}';
+    }
 
 }

@@ -16,16 +16,16 @@ public class Proveedor {
     private Integer idProveedor;
 
     @ManyToOne
-    @JoinColumn(name = "idTipoDocumento", nullable = false, foreignKey = @ForeignKey(name = "fkProveedorTipoDocumento"))
+    @JoinColumn(name = "idTipoDocumento")
     private TipoDocumento tipoDocumento;
 
-    @Column(name = "nroDocumento", nullable = false, length = 11)
+    @Column(name = "nroDocumento", length = 11)
     private String nroDocumento;
 
-    @Column(name = "nombre", nullable = false, length = 100)
+    @Column(name = "nombre", length = 100)
     private String nombre;
 
-    @Column(name = "direccion", nullable = false)
+    @Column(name = "direccion")
     private String direccion;
 
 }

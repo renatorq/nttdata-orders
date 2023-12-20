@@ -42,39 +42,9 @@ public class OrdenEntradaServiceImpl implements OrdenEntradaService {
             throw new Exception("Error al Registrar la Orden Entrada, El proveedor no existe");
         }
 
-        OrdenEntrada ordenEntradaRegistrada = ordenEntradaRepository.save(oe);
+        ordenEntradaRepository.save(oe);
 
-        for (OrdenEntradaDetalle detalle : oe.getDetalle()) {
-
-            Articulo a = articuloRepository.findById(detalle.getArticulo().getIdArticulo()).orElse(null);
-            if (a == null) continue;
-
-            detalle.setOrdenEntrada(ordenEntradaRegistrada);
-            detalleService.guardarDetalleOrden(detalle);
-        }
+        detalleService.enviarMensaje(oe.getDetalle());
 
     }
-
-
-//    public void registroOrdenEntrada(OrdenEntrada oe) throws Exception {
-//        // Guardar la orden de entrada primero para obtener su ID generado
-//        OrdenEntrada nuevaOrdenEntrada = ordenEntradaRepository.save(oe);
-//
-//        // Asociar la orden de entrada con los detalles y guardarlos
-//        if (oe.getDetalle() != null) {
-//            for (OrdenEntradaDetalle detalle : oe.getDetalle()) {
-//                // Asignar la orden de entrada al detalle
-//                detalle.setOrdenEntrada(nuevaOrdenEntrada);
-//
-//                // Asegurarse de que el artículo no sea nulo
-//                if (detalle.getArticulo() != null) {
-//                    // Guardar el detalle con la relación a la orden de entrada y al artículo
-//                    detalleRepository.save(detalle);
-//                }
-//                // Puedes manejar el caso donde el artículo es nulo según tus requisitos
-//            }
-//        }
-//
-//    }
-
 }
