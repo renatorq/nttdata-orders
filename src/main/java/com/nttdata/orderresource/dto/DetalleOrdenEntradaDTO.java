@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public class DetalleOrdenEntradaDTO {
 
     private Integer idDetalleEntrada;
+    private Integer idOrdenEntrada;
     private Integer cantidad;
     private BigDecimal precioUnitario;
     private Integer idArticulo;

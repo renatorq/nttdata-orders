@@ -40,6 +40,7 @@ public class OrdenEntradaDetalleServiceImpl implements OrdenEntradaDetalleServic
         DetalleOrdenEntradaDTO detalleDTO = new DetalleOrdenEntradaDTO();
 
         detalleDTO.setIdDetalleEntrada(d.getIdDetalleEntrada());
+        detalleDTO.setIdOrdenEntrada(d.getOrdenEntrada().getIdOrdenEntrada());
         detalleDTO.setCantidad(d.getCantidad());
         detalleDTO.setPrecioUnitario(d.getPrecioUnitario());
         detalleDTO.setIdArticulo(d.getArticulo().getIdArticulo());
