@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring:
   security:
     oauth2:
@@ -23,5 +25,12 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    topic:
       name: topic-almacen-articulos
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      group-id: almacen-ordenes
+      name: topic-almacen-ordenes
+    topic:
+      names: topic-almacen-articulos,topic-almacen-ordenes

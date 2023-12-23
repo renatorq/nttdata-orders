@@ -38,7 +38,6 @@ public class OrdenEntradaServiceImpl implements OrdenEntradaService {
         Optional<Proveedor> proveedor = proveedorRepository.findById(oe.getProveedor().getIdProveedor());
 
         if (proveedor.isEmpty()) {
-            System.out.println("EL proveedor no existe!");
             throw new Exception("Error al Registrar la Orden Entrada, El proveedor no existe");
         }
 

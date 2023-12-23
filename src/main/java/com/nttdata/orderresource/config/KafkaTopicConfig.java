@@ -7,16 +7,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 public class KafkaTopicConfig {
-
-    @Value("${spring.kafka.topic.name}")
-    private String topicName;
+    @Value("${spring.kafka.topic.names}")
+    private List<String> topicNames;
 
     @Bean
-    public NewTopic topic(){
-        return TopicBuilder.name(topicName)
-                .build();
+    public List<NewTopic> createNewTopics() {
+        return Arrays.asList(
+                TopicBuilder
+                        .name(topicNames.get(0))
+                        .build(),
+                TopicBuilder
+                        .name(topicNames.get(1))
+                        .build()
+        );
     }
 
 }
