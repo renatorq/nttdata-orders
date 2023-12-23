@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,5 +48,17 @@ public class OrdenEntradaServiceImpl implements OrdenEntradaService {
 
         detalleService.enviarMensaje(oe.getDetalle());
 
+    }
+
+    @Override
+    public List<OrdenEntrada> listarOrdenEntradaxFechas(LocalDate fechaInicio, LocalDate fechaFin) {
+        return ordenEntradaRepository.findByFechaentradaBetween(fechaInicio, fechaFin);
+    }
+
+    @Override
+    public OrdenEntrada obtenerOrdenEntrada(Integer id) {
+        Optional<OrdenEntrada> ordenEntrada = ordenEntradaRepository.findById(id);
+
+        return ordenEntrada.isPresent() ? ordenEntrada.get() : new OrdenEntrada();
     }
 }

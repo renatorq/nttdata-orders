@@ -1,6 +1,6 @@
 package com.nttdata.orderresource.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -17,7 +17,7 @@ public class OrdenEntradaDetalle {
 
     @ManyToOne
     @JoinColumn(name = "idOrdenEntrada")
-    @JsonIgnoreProperties
+    @JsonBackReference
     private OrdenEntrada ordenEntrada;
 
     @ManyToOne

@@ -1,6 +1,7 @@
 package com.nttdata.orderresource.service.impl;
 
 import com.nttdata.orderresource.dto.DetalleOrdenEntradaDTO;
+import com.nttdata.orderresource.kafka.KafkaProducer;
 import com.nttdata.orderresource.kafka.KafkaProducerImpl;
 import com.nttdata.orderresource.model.OrdenEntradaDetalle;
 import com.nttdata.orderresource.repository.OrdenEntradaDetalleRepository;
@@ -16,7 +17,7 @@ public class OrdenEntradaDetalleServiceImpl implements OrdenEntradaDetalleServic
     @Autowired
     private OrdenEntradaDetalleRepository detalleConsultaRepository;
     @Autowired
-    private KafkaProducerImpl kafkaProducerImpl;
+    private KafkaProducer kafkaProducer;
 
     @Override
     public void enviarMensaje(List<OrdenEntradaDetalle> detalle) throws Exception {
@@ -24,7 +25,7 @@ public class OrdenEntradaDetalleServiceImpl implements OrdenEntradaDetalleServic
         try {
             for (OrdenEntradaDetalle d : detalle) {
                 DetalleOrdenEntradaDTO detalleOrdenEntradaDTO = this.cargarDTO(d);
-                kafkaProducerImpl.sendMessage(detalleOrdenEntradaDTO);
+                kafkaProducer.sendMessage(detalleOrdenEntradaDTO);
             }
         } catch (Exception e) {
             throw new Exception(e);
