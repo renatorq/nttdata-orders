@@ -1,6 +1,6 @@
 package com.nttdata.orderresource.config;
 
-import com.nttdata.orderresource.dto.RespuestaOrdenDTO;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,31 +20,31 @@ import java.util.Map;
 @EnableKafka
 public class KafkaConsumerConfig {
 
-    @Value("${spring.kafka.consumer.bootstrap-servers}")
-    private String bootstrapServers;
-
-    @Value("${spring.kafka.consumer.group-id}")
-    private String groupId;
-
-    @Bean
-    public ConsumerFactory<String, RespuestaOrdenDTO> consumerFactory() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
-        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
-
-        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
-                new JsonDeserializer<>(RespuestaOrdenDTO.class, false));
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, RespuestaOrdenDTO> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, RespuestaOrdenDTO> factory =
-                new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-        return factory;
-    }
+//    @Value("${spring.kafka.consumer.bootstrap-servers}")
+//    private String bootstrapServers;
+//
+//    @Value("${spring.kafka.consumer.group-id}")
+//    private String groupId;
+//
+//    @Bean
+//    public ConsumerFactory<String, RespuestaOrdenDTO> consumerFactory() {
+//        Map<String, Object> props = new HashMap<>();
+//        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+//        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+//        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+//        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
+//        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
+//
+//        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),
+//                new JsonDeserializer<>(RespuestaOrdenDTO.class, false));
+//    }
+//
+//    @Bean
+//    public ConcurrentKafkaListenerContainerFactory<String, RespuestaOrdenDTO> kafkaListenerContainerFactory() {
+//        ConcurrentKafkaListenerContainerFactory<String, RespuestaOrdenDTO> factory =
+//                new ConcurrentKafkaListenerContainerFactory<>();
+//        factory.setConsumerFactory(consumerFactory());
+//        return factory;
+//    }
 
 }

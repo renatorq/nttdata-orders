@@ -9,16 +9,16 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-public class OrdenEntradaDetalle {
+public class OrdenDetalle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idDetalleEntrada;
+    private Integer idDetalleOrden;
 
     @ManyToOne
-    @JoinColumn(name = "idOrdenEntrada")
+    @JoinColumn(name = "idOrden")
     @JsonBackReference
-    private OrdenEntrada ordenEntrada;
+    private Orden orden;
 
     @ManyToOne
     @JoinColumn(name = "idArticulo")

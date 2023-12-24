@@ -1,12 +1,10 @@
 package com.nttdata.orderresource.service.impl;
 
-import com.nttdata.orderresource.model.Articulo;
-import com.nttdata.orderresource.model.OrdenEntrada;
-import com.nttdata.orderresource.model.OrdenEntradaDetalle;
+import com.nttdata.orderresource.model.Orden;
 import com.nttdata.orderresource.model.Proveedor;
 import com.nttdata.orderresource.repository.ArticuloRepository;
-import com.nttdata.orderresource.repository.OrdenEntradaDetalleRepository;
-import com.nttdata.orderresource.repository.OrdenEntradaRepository;
+import com.nttdata.orderresource.repository.OrdenDetalleRepository;
+import com.nttdata.orderresource.repository.OrdenRepository;
 import com.nttdata.orderresource.repository.ProveedorRepository;
 import com.nttdata.orderresource.service.OrdenEntradaDetalleService;
 import com.nttdata.orderresource.service.OrdenEntradaService;
@@ -15,15 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrdenEntradaServiceImpl implements OrdenEntradaService {
+public class OrdenServiceImpl implements OrdenEntradaService {
 
     @Autowired
-    private OrdenEntradaRepository ordenEntradaRepository;
+    private OrdenRepository ordenRepository;
     @Autowired
     private ProveedorRepository proveedorRepository;
     @Autowired
@@ -32,11 +29,11 @@ public class OrdenEntradaServiceImpl implements OrdenEntradaService {
     private OrdenEntradaDetalleService detalleService;
 
     @Autowired
-    private OrdenEntradaDetalleRepository detalleRepository;
+    private OrdenDetalleRepository detalleRepository;
 
     @Transactional
     @Override
-    public void registroOrdenEntrada(OrdenEntrada oe) throws Exception {
+    public void registroOrdenEntrada(Orden oe) throws Exception {
 
         Optional<Proveedor> proveedor = proveedorRepository.findById(oe.getProveedor().getIdProveedor());
 
@@ -44,21 +41,21 @@ public class OrdenEntradaServiceImpl implements OrdenEntradaService {
             throw new Exception("Error al Registrar la Orden Entrada, El proveedor no existe");
         }
 
-        ordenEntradaRepository.save(oe);
+        ordenRepository.save(oe);
 
-        detalleService.enviarMensaje(oe.getDetalle());
+        detalleService.enviarMensaje(oe.getDetalle(), oe.getTipoOrden());
 
     }
 
     @Override
-    public List<OrdenEntrada> listarOrdenEntradaxFechas(LocalDate fechaInicio, LocalDate fechaFin) {
-        return ordenEntradaRepository.findByFechaentradaBetween(fechaInicio, fechaFin);
+    public List<Orden> listarOrdenEntradaxFechas(LocalDate fechaInicio, LocalDate fechaFin) {
+        return ordenRepository.findByFecharegistroBetween(fechaInicio, fechaFin);
     }
 
     @Override
-    public OrdenEntrada obtenerOrdenEntrada(Integer id) {
-        Optional<OrdenEntrada> ordenEntrada = ordenEntradaRepository.findById(id);
+    public Orden obtenerOrdenEntrada(Integer id) {
+        Optional<Orden> ordenEntrada = ordenRepository.findById(id);
 
-        return ordenEntrada.isPresent() ? ordenEntrada.get() : new OrdenEntrada();
+        return ordenEntrada.isPresent() ? ordenEntrada.get() : new Orden();
     }
 }

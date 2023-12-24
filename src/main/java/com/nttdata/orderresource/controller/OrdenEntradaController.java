@@ -1,7 +1,7 @@
 package com.nttdata.orderresource.controller;
 
-import com.nttdata.orderresource.model.OrdenEntrada;
-import com.nttdata.orderresource.model.OrdenEntradaDetalle;
+import com.nttdata.orderresource.model.Orden;
+import com.nttdata.orderresource.model.OrdenDetalle;
 import com.nttdata.orderresource.service.OrdenEntradaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,15 +18,15 @@ public class OrdenEntradaController {
     private OrdenEntradaService service;
 
     @PostMapping("/registro")
-    public ResponseEntity<Object> registroOrdenEntrada(@RequestBody OrdenEntrada oe) throws Exception {
+    public ResponseEntity<Object> registroOrdenEntrada(@RequestBody Orden oe) throws Exception {
         try {
 
-            for (OrdenEntradaDetalle detalle : oe.getDetalle()) {
-                detalle.setOrdenEntrada(oe);
+            for (OrdenDetalle detalle : oe.getDetalle()) {
+                detalle.setOrden(oe);
             }
 
             service.registroOrdenEntrada(oe);
-            return ResponseEntity.ok().body("Orden de entrada registrada con ID: " + oe.getIdOrdenEntrada());
+            return ResponseEntity.ok().body("Orden de " + oe.getTipoOrden() + " registrada con ID: " + oe.getIdOrden());
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -35,7 +34,7 @@ public class OrdenEntradaController {
     }
 
     @GetMapping("/filtrarxfecha")
-    public ResponseEntity<List<OrdenEntrada>> obtenerOrdenesxFechas(
+    public ResponseEntity<List<Orden>> obtenerOrdenesxFechas(
             @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaInicio,
             @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaFin) {
 
@@ -43,7 +42,7 @@ public class OrdenEntradaController {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<OrdenEntrada> obtenerOrdenes(
+    public ResponseEntity<Orden> obtenerOrdenes(
             @RequestParam("id") Integer id) {
 
         return ResponseEntity.ok(service.obtenerOrdenEntrada(id));

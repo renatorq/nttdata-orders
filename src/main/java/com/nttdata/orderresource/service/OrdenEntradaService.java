@@ -1,17 +1,16 @@
 package com.nttdata.orderresource.service;
 
-import com.nttdata.orderresource.model.OrdenEntrada;
+import com.nttdata.orderresource.model.Orden;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public interface OrdenEntradaService {
 
-    void registroOrdenEntrada(OrdenEntrada oe) throws Exception;
+    void registroOrdenEntrada(Orden oe) throws Exception;
 
-    List<OrdenEntrada> listarOrdenEntradaxFechas(LocalDate fechaInicio, LocalDate fechaFin);
+    List<Orden> listarOrdenEntradaxFechas(LocalDate fechaInicio, LocalDate fechaFin);
 
-    OrdenEntrada obtenerOrdenEntrada(Integer id);
+    Orden obtenerOrdenEntrada(Integer id);
 
 }
