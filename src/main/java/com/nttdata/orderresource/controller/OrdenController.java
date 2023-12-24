@@ -2,7 +2,7 @@ package com.nttdata.orderresource.controller;
 
 import com.nttdata.orderresource.model.Orden;
 import com.nttdata.orderresource.model.OrdenDetalle;
-import com.nttdata.orderresource.service.OrdenEntradaService;
+import com.nttdata.orderresource.service.OrdenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +12,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ordenEntrada")
-public class OrdenEntradaController {
+@RequestMapping("/orden")
+public class OrdenController {
     @Autowired
-    private OrdenEntradaService service;
+    private OrdenService service;
 
     @PostMapping("/registro")
-    public ResponseEntity<Object> registroOrdenEntrada(@RequestBody Orden oe) throws Exception {
+    public ResponseEntity<Object> registroOrden(@RequestBody Orden oe) throws Exception {
         try {
 
             for (OrdenDetalle detalle : oe.getDetalle()) {
@@ -36,16 +36,21 @@ public class OrdenEntradaController {
     @GetMapping("/filtrarxfecha")
     public ResponseEntity<List<Orden>> obtenerOrdenesxFechas(
             @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaInicio,
-            @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaFin) {
+            @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaFin,
+            @RequestParam("tipoOrden") String tipoOrden) {
 
-        return ResponseEntity.ok(service.listarOrdenEntradaxFechas(fechaInicio, fechaFin));
+        return ResponseEntity.ok(service.listarOrdenxFechasyTipoOrden(fechaInicio, fechaFin, tipoOrden));
     }
 
     @GetMapping("/buscar")
     public ResponseEntity<Orden> obtenerOrdenes(
             @RequestParam("id") Integer id) {
 
-        return ResponseEntity.ok(service.obtenerOrdenEntrada(id));
+        return ResponseEntity.ok(service.obtenerOrden(id));
+    }
+
+    public ResponseEntity<Boolean> anularOrden(@RequestParam("id") Integer id) {
+        return ResponseEntity.ok(service.anularOrden(id));
     }
 
 }

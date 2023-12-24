@@ -4,7 +4,7 @@ import com.nttdata.orderresource.model.OrdenDetalle;
 
 import java.util.List;
 
-public interface OrdenEntradaDetalleService {
+public interface OrdenDetalleService {
 
     void enviarMensaje(List<OrdenDetalle> detalle,String tipoOrden) throws Exception;
 

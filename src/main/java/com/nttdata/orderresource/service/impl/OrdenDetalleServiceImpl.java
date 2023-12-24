@@ -4,14 +4,14 @@ import com.nttdata.orderresource.dto.DetalleOrdenDTO;
 import com.nttdata.orderresource.kafka.KafkaProducer;
 import com.nttdata.orderresource.model.OrdenDetalle;
 import com.nttdata.orderresource.repository.OrdenDetalleRepository;
-import com.nttdata.orderresource.service.OrdenEntradaDetalleService;
+import com.nttdata.orderresource.service.OrdenDetalleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class OrdenDetalleServiceImpl implements OrdenEntradaDetalleService {
+public class OrdenDetalleServiceImpl implements OrdenDetalleService {
 
     @Autowired
     private OrdenDetalleRepository detalleConsultaRepository;
