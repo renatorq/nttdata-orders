@@ -19,11 +19,11 @@ public class OrdenDetalleServiceImpl implements OrdenDetalleService {
     private KafkaProducer kafkaProducer;
 
     @Override
-    public void enviarMensaje(List<OrdenDetalle> detalle,String tipoOrden) throws Exception {
+    public void enviarMensaje(List<OrdenDetalle> detalle, String tipoOrden, String tipoOperacion) throws Exception {
 
         try {
             for (OrdenDetalle d : detalle) {
-                DetalleOrdenDTO detalleOrdenDTO = this.cargarDTO(d,tipoOrden);
+                DetalleOrdenDTO detalleOrdenDTO = this.cargarDTO(d, tipoOrden, tipoOperacion);
                 kafkaProducer.sendMessage(detalleOrdenDTO);
             }
         } catch (Exception e) {
@@ -31,14 +31,14 @@ public class OrdenDetalleServiceImpl implements OrdenDetalleService {
         }
     }
 
-    private DetalleOrdenDTO cargarDTO(OrdenDetalle d,String tipoOrden) {
+    private DetalleOrdenDTO cargarDTO(OrdenDetalle d, String tipoOrden, String tipoOperacion) {
         DetalleOrdenDTO detalleDTO = new DetalleOrdenDTO();
-        detalleDTO.setIdDetalle(d.getIdDetalleOrden());
         detalleDTO.setIdOrden(d.getOrden().getIdOrden());
         detalleDTO.setCantidad(d.getCantidad());
         detalleDTO.setPrecioUnitario(d.getPrecioUnitario());
         detalleDTO.setIdArticulo(d.getArticulo().getIdArticulo());
         detalleDTO.setTipoOrden(tipoOrden);
+        detalleDTO.setTipoOperacion(tipoOperacion);
         return detalleDTO;
     }
 }

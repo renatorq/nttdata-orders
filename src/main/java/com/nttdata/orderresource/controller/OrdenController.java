@@ -49,8 +49,9 @@ public class OrdenController {
         return ResponseEntity.ok(service.obtenerOrden(id));
     }
 
-    public ResponseEntity<Boolean> anularOrden(@RequestParam("id") Integer id) {
-        return ResponseEntity.ok(service.anularOrden(id));
+    public ResponseEntity<Object> anularOrden(@RequestParam("id") Integer id) throws Exception {
+        service.anularOrden(id);
+        return ResponseEntity.ok("OK");
     }
 
 }

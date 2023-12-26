@@ -13,6 +13,6 @@ public interface OrdenService {
 
     Orden obtenerOrden(Integer id);
 
-    Boolean anularOrden(Integer id) throws Exception;
+    void anularOrden(Integer id) throws Exception;
 
 }

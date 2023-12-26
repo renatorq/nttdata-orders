@@ -8,6 +8,8 @@ import com.nttdata.orderresource.repository.OrdenRepository;
 import com.nttdata.orderresource.repository.ProveedorRepository;
 import com.nttdata.orderresource.service.OrdenDetalleService;
 import com.nttdata.orderresource.service.OrdenService;
+
+import com.nttdata.orderresource.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import static com.nttdata.orderresource.utils.Constantes.*;
 
 @Service
 public class OrdenServiceImpl implements OrdenService {
@@ -49,13 +53,13 @@ public class OrdenServiceImpl implements OrdenService {
 
         ordenRepository.save(oe);
 
-        detalleService.enviarMensaje(oe.getDetalle(), oe.getTipoOrden());
+        detalleService.enviarMensaje(oe.getDetalle(), oe.getTipoOrden(), TIPO_OPERACION_RE);
 
     }
 
     @Override
-    public List<Orden> listarOrdenxFechasyTipoOrden(LocalDate fechaInicio, LocalDate fechaFin,String tipoOrden) {
-        return ordenRepository.findByFecharegistroBetweenAndTipoOrden(fechaInicio, fechaFin,tipoOrden);
+    public List<Orden> listarOrdenxFechasyTipoOrden(LocalDate fechaInicio, LocalDate fechaFin, String tipoOrden) {
+        return ordenRepository.findByFecharegistroBetweenAndTipoOrden(fechaInicio, fechaFin, tipoOrden);
     }
 
     @Override
@@ -66,15 +70,16 @@ public class OrdenServiceImpl implements OrdenService {
     }
 
     @Override
-    public Boolean anularOrden(Integer id) throws Exception {
+    public void anularOrden(Integer id) throws Exception {
 
         Optional<Orden> orden = ordenRepository.findById(id);
         if (orden.isEmpty()) {
             throw new Exception("Error al Anular Orden, Orden no existe!");
         }
 
+        Orden ordenEncontrada = orden.get();
 
+        detalleService.enviarMensaje(ordenEncontrada.getDetalle(), ordenEncontrada.getTipoOrden(), TIPO_OPERACION_AN);
 
-        return null;
     }
 }
