@@ -82,4 +82,6 @@ public class OrdenServiceImpl implements OrdenService {
         detalleService.enviarMensaje(ordenEncontrada.getDetalle(), ordenEncontrada.getTipoOrden(), TIPO_OPERACION_AN);
 
     }
+
+
 }

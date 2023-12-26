@@ -3,12 +3,16 @@ package com.nttdata.orderresource.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrdenDetalle {
 
     @Id
