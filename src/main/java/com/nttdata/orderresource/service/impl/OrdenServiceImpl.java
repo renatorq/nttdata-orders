@@ -1,6 +1,7 @@
 package com.nttdata.orderresource.service.impl;
 
 import com.nttdata.orderresource.model.Orden;
+import com.nttdata.orderresource.model.OrdenDetalle;
 import com.nttdata.orderresource.model.Proveedor;
 import com.nttdata.orderresource.repository.ArticuloRepository;
 import com.nttdata.orderresource.repository.OrdenDetalleRepository;
@@ -49,6 +50,9 @@ public class OrdenServiceImpl implements OrdenService {
             if (proveedor.isEmpty()) {
                 throw new Exception("Error al Registrar la Orden de " + oe.getTipoOrden() + ", El proveedor no existe");
             }
+        }
+        for (OrdenDetalle detalle : oe.getDetalle()) {
+            detalle.setOrden(oe);
         }
 
         ordenRepository.save(oe);

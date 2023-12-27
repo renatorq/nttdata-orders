@@ -21,10 +21,6 @@ public class OrdenController {
     public ResponseEntity<Object> registroOrden(@RequestBody Orden oe) throws Exception {
         try {
 
-            for (OrdenDetalle detalle : oe.getDetalle()) {
-                detalle.setOrden(oe);
-            }
-
             service.registroOrdenEntrada(oe);
             return ResponseEntity.ok().body("Orden de " + oe.getTipoOrden() + " registrada con ID: " + oe.getIdOrden());
 
