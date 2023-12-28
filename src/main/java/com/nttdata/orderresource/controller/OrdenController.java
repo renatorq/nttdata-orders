@@ -45,6 +45,7 @@ public class OrdenController {
         return ResponseEntity.ok(service.obtenerOrden(id));
     }
 
+    @PutMapping("/anular")
     public ResponseEntity<Object> anularOrden(@RequestParam("id") Integer id) throws Exception {
         service.anularOrden(id);
         return ResponseEntity.ok("OK");
